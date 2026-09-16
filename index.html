@@ -3,864 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BaiMarket Panel</title>
+<title>BaiMarket API Test</title>
 
 <style>
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    --bg: #050807;
-    --panel: #0b100d;
-    --panel2: #0f1612;
-    --border: #1b2921;
-    --text: #f3f7f4;
-    --muted: #89968e;
-    --green: #35d875;
-    --green2: #21a95a;
-    --danger: #ef5350;
 }
 
 body {
-    font-family: Inter, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    margin: 0;
     min-height: 100vh;
-}
-
-button,
-input,
-select {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.navbar {
-    height: 64px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(5, 8, 7, .96);
-    display: flex;
-    align-items: center;
-    padding: 0 22px;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-}
-
-.logo {
-    font-size: 20px;
-    font-weight: 800;
-}
-
-.logo span {
-    color: var(--green);
-}
-
-.nav-right {
-    margin-left: auto;
-    display: flex;
-    gap: 10px;
-}
-
-.nav-btn {
-    background: transparent;
-    color: #aeb9b2;
-    border: 1px solid transparent;
-    padding: 9px 13px;
-    border-radius: 8px;
-}
-
-.nav-btn:hover {
-    color: white;
-    background: #0d1511;
-    border-color: var(--border);
-}
-
-.container {
-    width: min(1120px, calc(100% - 32px));
-    margin: auto;
-}
-
-.hero {
-    padding: 70px 0 45px;
-}
-
-.badge {
-    display: inline-flex;
-    border: 1px solid #1c3828;
-    color: #7ee8a4;
-    background: #0a160e;
-    padding: 6px 10px;
-    border-radius: 7px;
-    font-size: 12px;
-    margin-bottom: 18px;
-}
-
-.hero h1 {
-    font-size: clamp(34px, 6vw, 62px);
-    line-height: 1;
-    letter-spacing: -2px;
-    max-width: 720px;
-}
-
-.hero h1 span {
-    color: var(--green);
-}
-
-.hero p {
-    color: var(--muted);
-    margin-top: 18px;
-    max-width: 620px;
-    line-height: 1.7;
-}
-
-.section-title {
-    margin: 20px 0;
-    font-size: 21px;
-}
-
-.packages {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding-bottom: 50px;
-}
-
-.card {
-    background: linear-gradient(180deg, #0d1511, #090e0b);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px;
-}
-
-.card:hover {
-    border-color: #285039;
-}
-
-.card h3 {
-    font-size: 18px;
-}
-
-.price {
-    margin: 18px 0;
-    font-size: 27px;
-    font-weight: 800;
-}
-
-.price small {
-    color: var(--muted);
-    font-size: 13px;
-    font-weight: 400;
-}
-
-.specs {
-    list-style: none;
-    color: #aeb8b2;
-    line-height: 2;
-    font-size: 14px;
-    margin-bottom: 20px;
-}
-
-.specs li::before {
-    content: "•";
-    color: var(--green);
-    margin-right: 8px;
-}
-
-.primary {
-    width: 100%;
-    background: var(--green);
-    border: 0;
-    color: #031108;
-    font-weight: 800;
-    padding: 11px;
-    border-radius: 8px;
-}
-
-.primary:hover {
-    background: #55e889;
-}
-
-.secondary {
-    width: 100%;
-    background: #101813;
-    border: 1px solid var(--border);
-    color: white;
-    padding: 11px;
-    border-radius: 8px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.modal-bg {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.72);
+    background: #050807;
+    color: #fff;
+    font-family: Arial, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    z-index: 100;
+    padding: 20px;
 }
 
-.modal {
-    width: min(500px, 100%);
-    background: #0b100d;
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 23px;
-}
-
-.modal-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.close {
-    border: 0;
-    background: transparent;
-    color: #89968e;
-    font-size: 24px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    color: #9aa69f;
-    font-size: 13px;
-    margin-bottom: 7px;
-}
-
-.form-group input,
-.form-group select {
+.box {
     width: 100%;
-    background: #060a08;
-    border: 1px solid var(--border);
-    color: white;
-    padding: 11px;
-    border-radius: 8px;
-    outline: none;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #267541;
-}
-
-.upload {
-    border: 1px dashed #294232;
-    padding: 18px;
-    text-align: center;
-    border-radius: 9px;
-    color: var(--muted);
-}
-
-.upload input {
-    margin-top: 10px;
-}
-
-.payment {
-    background: #07100a;
-    border: 1px solid #1b3825;
-    padding: 15px;
-    border-radius: 9px;
-    margin-bottom: 16px;
-}
-
-.payment strong {
-    color: #78e89e;
-}
-
-.order-box {
-    margin: 20px 0 60px;
-}
-
-.order {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    max-width: 600px;
     background: #0b100d;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 10px;
+    border: 1px solid #1b2921;
+    border-radius: 14px;
+    padding: 25px;
 }
 
-.order-info {
-    flex: 1;
+h1 {
+    margin: 0 0 8px;
 }
 
-.order-id {
-    color: #87958d;
-    font-size: 12px;
-    margin-bottom: 5px;
+h1 span {
+    color: #35d875;
 }
 
-.status {
-    font-size: 12px;
-    padding: 5px 8px;
-    border-radius: 6px;
-    background: #30270b;
-    color: #e9ca63;
+p {
+    color: #89968e;
 }
 
-.status.success {
-    background: #0c2b18;
-    color: #67df91;
-}
-
-.status.danger {
-    background: #301010;
-    color: #f17c79;
-}
-
-.admin {
-    margin: 30px 0 70px;
-    border-top: 1px solid var(--border);
-    padding-top: 35px;
-}
-
-.admin-row {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    background: #0b100d;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.admin-row .info {
-    flex: 1;
-}
-
-.admin-actions {
-    display: flex;
-    gap: 7px;
-}
-
-.accept {
-    background: #1ca958;
-    color: white;
+button {
+    width: 100%;
     border: 0;
-    padding: 8px 12px;
-    border-radius: 7px;
+    border-radius: 8px;
+    padding: 12px;
+    background: #35d875;
+    color: #031108;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.reject {
-    background: #311313;
-    color: #ef8b88;
-    border: 1px solid #542020;
-    padding: 8px 12px;
-    border-radius: 7px;
+button:hover {
+    background: #55e889;
 }
 
-.server-result {
-    margin-top: 15px;
-    background: #07130b;
-    border: 1px solid #1d492c;
+pre {
+    margin-top: 18px;
     padding: 15px;
     border-radius: 9px;
+    background: #050907;
+    border: 1px solid #18251e;
     color: #9ae8b4;
-    font-size: 13px;
-    line-height: 1.8;
-}
-
-footer {
-    border-top: 1px solid var(--border);
-    color: #657169;
-    padding: 25px 0;
-    font-size: 13px;
-}
-
-@media(max-width: 800px) {
-    .packages {
-        grid-template-columns: 1fr;
-    }
-
-    .hero {
-        padding-top: 45px;
-    }
-
-    .order {
-        align-items: flex-start;
-        flex-wrap: wrap;
-    }
-
-    .admin-row {
-        flex-wrap: wrap;
-    }
-
-    .admin-actions {
-        width: 100%;
-    }
-
-    .admin-actions button {
-        flex: 1;
-    }
+    overflow: auto;
+    white-space: pre-wrap;
 }
 </style>
 </head>
 
 <body>
 
-<header class="navbar">
-    <div class="logo">
-        BaiMarket<span>.</span>
-    </div>
+<div class="box">
 
-    <div class="nav-right">
-        <button class="nav-btn" onclick="showOrders()">Pesanan</button>
-        <button class="nav-btn" onclick="showAdmin()">Admin</button>
-    </div>
-</header>
-
-<main class="container">
-
-<section class="hero">
-    <div class="badge">BAIMARKET PANEL</div>
-
-    <h1>
-        Hosting panel<br>
-        <span>langsung aktif.</span>
-    </h1>
+    <h1>BaiMarket<span>.</span></h1>
 
     <p>
-        Pilih paket panel, lakukan pembayaran, lalu upload bukti transfer.
-        Setelah pembayaran diterima admin, panel akan diproses otomatis.
+        Pterodactyl API connection testing
     </p>
-</section>
 
-<h2 class="section-title">Pilih paket</h2>
+    <button onclick="testAPI()">
+        TEST API
+    </button>
 
-<section class="packages">
-
-    <div class="card">
-        <h3>Node Basic</h3>
-
-        <div class="price">
-            Rp15.000 <small>/ bulan</small>
-        </div>
-
-        <ul class="specs">
-            <li>2 GB RAM</li>
-            <li>50% CPU</li>
-            <li>5 GB Disk</li>
-            <li>Node.js</li>
-        </ul>
-
-        <button class="primary" onclick="checkout('Node Basic',15000,2,50,5)">
-            Beli Panel
-        </button>
-    </div>
-
-    <div class="card">
-        <h3>Node Pro</h3>
-
-        <div class="price">
-            Rp25.000 <small>/ bulan</small>
-        </div>
-
-        <ul class="specs">
-            <li>4 GB RAM</li>
-            <li>100% CPU</li>
-            <li>10 GB Disk</li>
-            <li>Node.js</li>
-        </ul>
-
-        <button class="primary" onclick="checkout('Node Pro',25000,4,100,10)">
-            Beli Panel
-        </button>
-    </div>
-
-    <div class="card">
-        <h3>Node Ultra</h3>
-
-        <div class="price">
-            Rp40.000 <small>/ bulan</small>
-        </div>
-
-        <ul class="specs">
-            <li>8 GB RAM</li>
-            <li>200% CPU</li>
-            <li>20 GB Disk</li>
-            <li>Node.js</li>
-        </ul>
-
-        <button class="primary" onclick="checkout('Node Ultra',40000,8,200,20)">
-            Beli Panel
-        </button>
-    </div>
-
-</section>
-
-<section id="ordersSection" class="order-box hidden">
-    <h2 class="section-title">Pesanan saya</h2>
-    <div id="orders"></div>
-</section>
-
-<section id="adminSection" class="admin hidden">
-    <h2 class="section-title">Admin — Verifikasi pembayaran</h2>
-    <div id="adminOrders"></div>
-</section>
-
-</main>
-
-<footer>
-    <div class="container">
-        BaiMarket Panel Testing
-    </div>
-</footer>
-
-
-<!-- CHECKOUT -->
-
-<div id="checkoutModal" class="modal-bg hidden">
-
-    <div class="modal">
-
-        <div class="modal-head">
-            <h2>Checkout</h2>
-            <button class="close" onclick="closeModal()">×</button>
-        </div>
-
-        <div id="selectedPackage"></div>
-
-        <div class="form-group">
-            <label>Nama</label>
-            <input id="customerName" placeholder="Nama kamu">
-        </div>
-
-        <div class="form-group">
-            <label>Email</label>
-            <input id="customerEmail" type="email" placeholder="Email">
-        </div>
-
-        <div class="payment">
-            Transfer ke:<br>
-            <strong>BRI — TESTING</strong><br>
-            <span>1234567890</span>
-        </div>
-
-        <div class="form-group">
-            <label>Bukti transfer</label>
-
-            <div class="upload">
-                Pilih foto bukti transfer
-                <br>
-                <input id="proof" type="file" accept="image/*">
-            </div>
-        </div>
-
-        <button class="primary" onclick="submitOrder()">
-            Kirim Pesanan
-        </button>
-
-    </div>
+    <pre id="result">Belum melakukan testing.</pre>
 
 </div>
 
-
 <script>
+async function testAPI() {
 
-let selected = null;
+    const result = document.getElementById("result");
 
-let orders = JSON.parse(localStorage.getItem("baimarket_orders") || "[]");
+    result.textContent = "Menghubungkan ke Pterodactyl...";
 
-function checkout(name, price, ram, cpu, disk) {
+    try {
 
-    selected = {
-        name,
-        price,
-        ram,
-        cpu,
-        disk
-    };
+        const response = await fetch("/api/ptero");
 
-    document.getElementById("selectedPackage").innerHTML = `
-        <div class="payment">
-            <strong>${name}</strong><br>
-            Rp${price.toLocaleString("id-ID")} / bulan<br>
-            ${ram} GB RAM · ${cpu}% CPU · ${disk} GB Disk
-        </div>
-    `;
+        const data = await response.json();
 
-    document.getElementById("checkoutModal").classList.remove("hidden");
-}
+        result.textContent =
+            JSON.stringify(data, null, 2);
 
-function closeModal() {
-    document.getElementById("checkoutModal").classList.add("hidden");
-}
+    } catch (error) {
 
-function submitOrder() {
+        result.textContent =
+            "ERROR: " + error.message;
 
-    const name = document.getElementById("customerName").value.trim();
-    const email = document.getElementById("customerEmail").value.trim();
-    const proof = document.getElementById("proof").files[0];
-
-    if (!name || !email || !proof) {
-        alert("Lengkapi nama, email, dan bukti transfer.");
-        return;
     }
-
-    const order = {
-        id: "BM-" + Date.now().toString().slice(-6),
-        customer: name,
-        email,
-        package: selected.name,
-        price: selected.price,
-        ram: selected.ram,
-        cpu: selected.cpu,
-        disk: selected.disk,
-        proof: proof.name,
-        status: "PENDING",
-        created: new Date().toLocaleString("id-ID")
-    };
-
-    orders.push(order);
-
-    save();
-
-    closeModal();
-
-    alert("Pesanan berhasil dikirim. Menunggu verifikasi admin.");
-
-    showOrders();
 }
-
-function save() {
-    localStorage.setItem(
-        "baimarket_orders",
-        JSON.stringify(orders)
-    );
-}
-
-function showOrders() {
-
-    document.getElementById("ordersSection").classList.remove("hidden");
-
-    document.getElementById("adminSection").classList.add("hidden");
-
-    renderOrders();
-
-    document
-        .getElementById("ordersSection")
-        .scrollIntoView({ behavior: "smooth" });
-}
-
-function renderOrders() {
-
-    const box = document.getElementById("orders");
-
-    if (!orders.length) {
-        box.innerHTML = `
-            <div class="card">
-                Belum ada pesanan.
-            </div>
-        `;
-        return;
-    }
-
-    box.innerHTML = orders.map(order => {
-
-        let statusClass = "";
-
-        if (order.status === "ACTIVE") {
-            statusClass = "success";
-        }
-
-        if (order.status === "REJECTED") {
-            statusClass = "danger";
-        }
-
-        return `
-            <div class="order">
-
-                <div class="order-info">
-
-                    <div class="order-id">
-                        ${order.id} · ${order.created}
-                    </div>
-
-                    <strong>${order.package}</strong>
-
-                    <div style="color:#87958d;font-size:13px;margin-top:4px">
-                        Rp${order.price.toLocaleString("id-ID")}
-                    </div>
-
-                    ${
-                        order.server
-                        ?
-                        `<div class="server-result">
-                            Server aktif<br>
-                            Username: ${order.server.username}<br>
-                            Server ID: ${order.server.serverId}<br>
-                            Status: ${order.server.status}
-                        </div>`
-                        :
-                        ""
-                    }
-
-                </div>
-
-                <span class="status ${statusClass}">
-                    ${order.status}
-                </span>
-
-            </div>
-        `;
-
-    }).join("");
-}
-
-function showAdmin() {
-
-    document.getElementById("adminSection").classList.remove("hidden");
-
-    document.getElementById("ordersSection").classList.add("hidden");
-
-    renderAdmin();
-
-    document
-        .getElementById("adminSection")
-        .scrollIntoView({ behavior: "smooth" });
-}
-
-function renderAdmin() {
-
-    const box = document.getElementById("adminOrders");
-
-    const pending = orders.filter(
-        order => order.status === "PENDING"
-    );
-
-    if (!pending.length) {
-
-        box.innerHTML = `
-            <div class="card">
-                Tidak ada pembayaran pending.
-            </div>
-        `;
-
-        return;
-    }
-
-    box.innerHTML = pending.map(order => `
-
-        <div class="admin-row">
-
-            <div class="info">
-
-                <div class="order-id">
-                    ${order.id}
-                </div>
-
-                <strong>${order.customer}</strong>
-
-                <div style="color:#87958d;font-size:13px;margin-top:4px">
-                    ${order.email}<br>
-                    ${order.package} ·
-                    Rp${order.price.toLocaleString("id-ID")}<br>
-                    Bukti: ${order.proof}
-                </div>
-
-            </div>
-
-            <div class="admin-actions">
-
-                <button
-                    class="accept"
-                    onclick="acceptOrder('${order.id}')">
-                    ACCEPT
-                </button>
-
-                <button
-                    class="reject"
-                    onclick="rejectOrder('${order.id}')">
-                    REJECT
-                </button>
-
-            </div>
-
-        </div>
-
-    `).join("");
-}
-
-function acceptOrder(id) {
-
-    const order = orders.find(
-        order => order.id === id
-    );
-
-    if (!order) return;
-
-    /*
-     * SIMULASI CREATE PTERODACTYL SERVER
-     */
-
-    order.status = "ACTIVE";
-
-    order.server = {
-        username:
-            order.customer
-                .toLowerCase()
-                .replace(/[^a-z0-9]/g, "")
-                .slice(0, 12),
-
-        serverId:
-            "SRV-" +
-            Math.random()
-                .toString(36)
-                .substring(2, 8)
-                .toUpperCase(),
-
-        status: "RUNNING"
-    };
-
-    save();
-
-    renderAdmin();
-
-    alert(
-        "Testing berhasil: server dianggap berhasil dibuat."
-    );
-}
-
-function rejectOrder(id) {
-
-    const order = orders.find(
-        order => order.id === id
-    );
-
-    if (!order) return;
-
-    order.status = "REJECTED";
-
-    save();
-
-    renderAdmin();
-
-    alert("Pesanan ditolak.");
-}
-
-renderOrders();
-
 </script>
 
 </body>
-  </html>
+</html>
